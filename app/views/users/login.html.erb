@@ -1,0 +1,29 @@
+
+<h1>Login Page</h1>
+
+<%= form_for @user, :as => :user, :url => users_path, :method => :post do |f| %>
+
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <p>
+    <%= f.label 'Enter your Username :' %>
+    <%= f.text_field :username %>
+  </p>
+  
+  <p>
+    <%= f.submit 'Log In', :class => "btn btn-primary" %>
+    <%= f.button 'Clear Form', :class => "btn btn-default", :type => 'reset'%>
+  </p>
+<% end -%>
+

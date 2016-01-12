@@ -13,3 +13,21 @@
  *= require_tree .
  *= require_self
  */
+ 
+ *= require bootstrap
+ 
+.main_container {
+		text-align: center;
+    color: red;
+    background-color: blue;
+ }
+ 
+body {
+		text-align: center;
+    background-color: white;
+    width: 700px;
+    height: 800px;
+    border: solid;
+    margin: 20px;
+    margin-left:20em;
+ }
