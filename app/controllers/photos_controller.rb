@@ -9,7 +9,7 @@ class PhotosController < ApplicationController
     #@photos_user = PhotosUser.where("user_id = ? AND is_owner = ? ", session[:user_id], 1)
     @my_photos = Photo.joins(:photos_users).where(photos_users: {user_id: session[:user_id], is_owner: 1} )
     
-    @shared_photos = Photo.joins(:photos_users).where(photos_users: {user_id: session[:user_id], is_owner: NIL} )
+    @shared_photos = Photo.joins(:photos_users).where(photos_users: {user_id: session[:user_id], is_owner: nil} )
   end
 
   # GET /photos/1
@@ -39,13 +39,13 @@ class PhotosController < ApplicationController
         #looping through all the users, and trimming the beginning and trailing spaces 
         shared_users.split(",").map(&:strip).each do |uname|
           #make an entry in the users if user doesn't exist
-          @uname_obj = User.find_or_create_by(username: uname)
+          @uname_obj = User.find_or_create_by!(username: uname)
 
           #make an entry in the mapping table
           PhotosUser.find_or_create_by!(user_id: @uname_obj.id, photo_id: @photo.id)
         end
 
-        format.html { redirect_to @photo, notice: 'Message was successfully Shared.' }
+        format.html { redirect_to photos_path, notice: 'Message was successfully Shared.' }
         format.json { render :index, status: :created, location: @photo }
       else
         format.html { render :new }
@@ -77,6 +77,14 @@ class PhotosController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def like_photo
+    @user.photos_users.where(:photo_id => params[:photo_id]).first.update_attributes(liked: true)
+  end
+
+  # def comment_photo
+  #   @user.photos_users.where(:photo_id => params[:photo_id]).first.update_attributes(comment: params[:comment])
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

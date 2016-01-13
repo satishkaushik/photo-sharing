@@ -3,7 +3,7 @@
 <h2>Welcome To the Page : <%= @user.username %></h2>
 
 <div>
-<%= link_to "Post a Photo", new_photo_path, :class => "btn btn-primary pull-right post_a_message" %>
+	<%= link_to "Post a Photo", new_photo_path, :class => "btn btn-primary pull-right" %>
 </div>
 
 <div class="container1">
@@ -20,14 +20,28 @@
     	<% else %>
     		<div class="row" style="margin: 0; width: 695px;">
 			  <% @my_photos.each do |photo| %>
-			    <div class="col-sm-4" style="height:100px; border: 1px solid black; border-collapse: collapse;">
-					<%= photo.file_name %>
+			    <div class="col-sm-4" style="height:150px; border: 1px solid black; border-collapse: collapse;text-align:left">
+					<div class="msg-thumbnail" style="height:100px;">
+						<%= photo.file_name %>
+					</div>
+					<div>
+<!--						
+						<% if photo.photos_users.where(user_id: @user.id, liked: true).present? %>
+							<%= link_to "Liked", 'javascript:void(0)' %>
+						<% else %>
+							<%= link_to "Like", photo_like_photo_path(photo), remote: true, id: "like_#{photo.id}" %>
+						<% end %>
+-->	
+						<%= photo.photos_users.where(liked: true).count %> Liked your post.
+						<br/>
+						
+					</div>
 			    </div>
 			  <% end %>
 	  	</div>
     	<% end %>
     </div>
-    
+
     <div id="shared-with-me" class="tab-pane fade">
     	<br/>
       	<% if @shared_photos.blank? %>
@@ -35,8 +49,19 @@
     	<% else %>
     		<div class="row" style="margin: 0; width: 695px;">
 			  <% @shared_photos.each do |photo| %>
-			    <div class="col-sm-4" style="height:100px; border: 1px solid black; border-collapse: collapse;">
-					<%= photo.file_name %>
+			    <div class="col-sm-4" style="height:150px; border: 1px solid black; border-collapse: collapse; text-align:left">
+			    	<div class="msg-thumbnail" style="height:100px;">
+						<%= photo.file_name %>
+					</div>
+					<div>
+						<% if photo.photos_users.where(user_id: @user.id, liked: true).present? %>
+							<%= link_to "You Liked this Message", 'javascript:void(0)' %>
+						<% else %>
+							<%= link_to "Like", photo_like_photo_path(photo), remote: true, id: "like_#{photo.id}" %>
+						<% end %>
+						<!--<%= photo.photos_users.where(liked: true).count %> -->
+						<br/>
+					</div>
 			    </div>
 			  <% end %>
 	  		</div>
@@ -45,28 +70,3 @@
   </div>
 
 </div>
-
-<!--
-<div class="container">
-  <ul class="nav nav-pills">
-    <li class="active"><a href="#my-photos">My Gallery</a></li>
-    <li><a href="#shared-with-me">Shared With Me</a></li>
-  </ul>
-</div>
-
-<% if @photos.blank? %>
-	<p>You seem new here. Please upload some photos to see.</p>
-	<%= link_to 'New Photo', new_photo_path, :class => 'btn btn-primary'%>
-<% else %>
-	<div id='my-photos'>
-	  	<div class="row" style="margin: 0; width: 695px;">
-			<% @photos.each do |photo| %>
-			    <div class="col-sm-4" style="height:100px; border: 1px solid black; border-collapse: collapse;">
-					<%= photo.file_name %>
-			    </div>
-			<% end %>
-	  	</div>
-	</div>
-<% end %>
-
--->
