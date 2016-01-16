@@ -82,9 +82,13 @@ class PhotosController < ApplicationController
     @user.photos_users.where(:photo_id => params[:photo_id]).first.update_attributes(liked: true)
   end
 
-  # def comment_photo
-  #   @user.photos_users.where(:photo_id => params[:photo_id]).first.update_attributes(comment: params[:comment])
-  # end
+  def comment
+    @user.photos_users.where(:photo_id => params[:photo_id]).first.update_attributes(comment: params[:comment])
+  end
+
+  def view_comments
+    @users_comments = PhotosUser.where(:photo_id => params[:photo_id]).all;
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -1,0 +1,21 @@
+
+<% if @users_comments.blank? %>
+  <p>comments not available.</p>
+<% else %>
+  <table class="table table-bordered">
+  	<thead>
+  	  <tr>
+  		<th>User Name</th> <th>Comment</th>
+  	  </tr>
+  	</thead>
+  	<tbody style="text-align:left;">
+    <% @users_comments.each do |user_comment| %>
+  	<% next if user_comment.comment.blank? %>
+      <tr>
+      	<td><%= user_comment.user.username %></td>
+        <td><%= user_comment.comment %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

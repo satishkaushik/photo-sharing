@@ -34,7 +34,7 @@
 -->	
 						<%= photo.photos_users.where(liked: true).count %> Liked your post.
 						<br/>
-						
+						<%= link_to "View comments", "javascript:void(0);", class: "view-comment", id: "view_comment_#{photo.id}", "data-photo": photo.id %>
 					</div>
 			    </div>
 			  <% end %>
@@ -54,13 +54,22 @@
 						<%= photo.file_name %>
 					</div>
 					<div>
+						<!-- Handle Like part-->
 						<% if photo.photos_users.where(user_id: @user.id, liked: true).present? %>
-							<%= link_to "You Liked this Message", 'javascript:void(0)' %>
+							<p>You Liked this Message</p>
 						<% else %>
 							<%= link_to "Like", photo_like_photo_path(photo), remote: true, id: "like_#{photo.id}" %>
 						<% end %>
-						<!--<%= photo.photos_users.where(liked: true).count %> -->
-						<br/>
+
+						<!-- Handle Comment part now-->
+						<%# if photo.photos_users.where(user_id: @user.id, comment: true).present? %>
+				
+						<% comment = photo.photos_users.select("comment").where(user_id: @user.id).first %>
+						<% if comment.comment? %>
+							<p><%= comment.comment %></p>
+						<% else %>
+							<%= link_to "Add Comment", "javascript:void(0);", class: "add-comment",id: "comment_#{photo.id}", "data-photo": photo.id %>	
+						<% end %>
 					</div>
 			    </div>
 			  <% end %>
@@ -70,3 +79,6 @@
   </div>
 
 </div>
+
+<%= render 'modal'%>
+<%= render 'view_comment_modal'%>

@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   
   resources :photos do
     get :like_photo
+    post :comment, :view_comments, on: :collection
   end
+#on: :collection - photo id is not required.
 
   resources :users, :only => [:create]
 

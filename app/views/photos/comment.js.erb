@@ -1,0 +1,3 @@
+photo_id = <%= params[:photo_id] %>
+$("#comment_"+photo_id).replaceWith("<p> <%= params[:comment] %> </p>");
+$("#comment").val(""); //resetting the value to null

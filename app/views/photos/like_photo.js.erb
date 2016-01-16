@@ -1,2 +1,3 @@
 photo_id = <%= params[:photo_id] %>
-$("#like_"+photo_id).html('You Liked this message').attr('disabled', true).attr('href', 'javascript:void(0)');
+//$("#like_"+photo_id).html('You Liked this message').attr('disabled', true).attr('href', 'javascript:void(0)');
+$("#like_"+photo_id).replaceWith("<p>You Liked this message</p>");
