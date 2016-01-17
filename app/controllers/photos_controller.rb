@@ -87,7 +87,8 @@ class PhotosController < ApplicationController
   end
 
   def view_comments
-    @users_comments = PhotosUser.where(:photo_id => params[:photo_id]).all;
+    #@users_comments = PhotosUser.where(:photo_id => params[:photo_id]).all;
+    @users_comments = PhotosUser.where("photo_id = ? and comment is not ?", params[:photo_id], nil);
   end
 
   private

@@ -10,7 +10,6 @@
   	</thead>
   	<tbody style="text-align:left;">
     <% @users_comments.each do |user_comment| %>
-  	<% next if user_comment.comment.blank? %>
       <tr>
       	<td><%= user_comment.user.username %></td>
         <td><%= user_comment.comment %></td>

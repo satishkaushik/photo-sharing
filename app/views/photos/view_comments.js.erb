@@ -1,5 +1,6 @@
 
-//$("#viewCommentModalBody").replaceWith("AAAAAAAAAAAAAAAAAAAAAAA");
-
-$("#viewCommentModalBody").replaceWith("<%= escape_javascript(render @users_comments) %>");
-
+<% if @users_comments.blank? %>
+	$("#viewCommentModalBody").replaceWith("Comments not available.");
+<% else %>
+	$("#viewCommentModalBody").replaceWith("<%= escape_javascript(render @users_comments) %>");
+<% end %>
