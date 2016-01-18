@@ -1,5 +1,5 @@
 class PhotosController < ApplicationController
-  before_action :set_photo, only: [:show, :edit, :update, :destroy]
+  before_action :set_photo, only: [:show, :edit, :update, :destroy, :view_comments]
   before_action :set_user
 
   # GET /photos
@@ -87,14 +87,14 @@ class PhotosController < ApplicationController
   end
 
   def view_comments
-    #@users_comments = PhotosUser.where(:photo_id => params[:photo_id]).all;
-    @users_comments = PhotosUser.where("photo_id = ? and comment is not ?", params[:photo_id], nil);
+    @users_comments = @photo.photos_users.where("comment IS NOT NULL")
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_photo
-      @photo = Photo.find(params[:id])
+      id = params[:id] || params[:photo_id]
+      @photo = Photo.find(id)
     end
     
     def set_user

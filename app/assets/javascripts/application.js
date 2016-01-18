@@ -20,7 +20,7 @@
 $(document).ready(function() {
 	//Add Comment 
 	$("a.add-comment").click(function(){
-		$("#photo-id").val($(this).data("photo"))
+		$("#photo-id").val($(this).data("photo"));
 		$("#myModal").modal({});
 	});
 
@@ -37,7 +37,7 @@ $(document).ready(function() {
 
 	//View Comments 
 	$("a.view-comment").click(function(){
-		$("#photo-id").val($(this).data("photo"))
+		$("#photo-id").val($(this).data("photo"));
 		var photo_id = $("#photo-id").val();
 		$.post("/photos/view_comments", {photo_id: photo_id});
 		$("#viewCommentModal").modal({});
